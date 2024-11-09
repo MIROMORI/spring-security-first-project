@@ -15,7 +15,12 @@ public class ApplicationSecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests((authz) -> authz.anyRequest().authenticated()).httpBasic(withDefaults());
+        http
+                .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("api/v1/**").authenticated()
+                        .anyRequest().permitAll()
+                )
+                .httpBasic(withDefaults());
         return http.build();
     }
 
